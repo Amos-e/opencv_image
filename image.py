@@ -35,7 +35,7 @@ try:
                 file.writelines(f'[{blue} {green} {red}]')
 
                 image[index0, index1] = gray_scale
-                black_and_white[index0, index1] = 0 if int(gray_scale)  < 175 else 255
+                black_and_white[index0, index1] = 0 if int(gray_scale)  < 128 else 255
                 index1 += 1
 
             file.writelines("]\n\n")
@@ -45,14 +45,6 @@ try:
 
         file.writelines("]\n")
         file.close()
-
-        print(image)
-
-        #Gray Scale Image
-        # cv.imshow("Gray Scale", image)
-
-        # #Black and White Image
-        # cv.imshow("Black and White", black_and_white)
 
         #Face Detection
         f_cascade = cv.CascadeClassifier("face.xml")
@@ -67,10 +59,20 @@ try:
         blurred_roi = cv.GaussianBlur(region, (29,29), 0)
         gray_image[y1:y1+height, x1:x1+width] = blurred_roi
 
-        # cv.imshow("Blurred Face", gray_image)
+        #Gray Scale Image
+        cv.imshow("Gray Scale", image)
+        cv.imwrite("gray_scale.png", image)
 
-        # cv.waitKey(0)
-        # cv.destroyAllWindows()
+        # #Black and White Image
+        cv.imshow("Black and White", black_and_white)
+        cv.imwrite("black_and_white.png", black_and_white)
+
+        #Blurred Face
+        cv.imshow("Blurred Face", gray_image)
+        cv.imwrite("blurred_face", gray_image)
+
+        cv.waitKey(0)
+        cv.destroyAllWindows()
 
 except IndexError:
     print("No Image Selected")
